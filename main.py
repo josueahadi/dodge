@@ -4,7 +4,7 @@ import random
 
 pygame.init()
 
-crash_sound = pygame.mixer.Sound("Glass_and_Metal_Collision.ogg")
+crash_sound = pygame.mixer.Sound("collision.ogg")
 pygame.mixer.music.load("Jazz_In_Paris.ogg")
 
 display_width = 800
