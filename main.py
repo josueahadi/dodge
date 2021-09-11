@@ -18,13 +18,13 @@ pygame.display.set_caption('Dodge')
 clock = pygame.time.Clock()
 
 carImg = pygame.image.load('assets/racecar-000.png')
-obstacleImg = pygame.image.load('assets/racecar-001.png')
+otherCarImg = pygame.image.load('assets/racecar-001.png')
 
-def obstacles(obstaclex, obstacley, obstaclew, obstacleh, color):
-    pygame.draw.rect(gameDisplay, color, [obstaclex, obstacley])
+def lanes(lanex, laney, lanew, laneh, color):
+    pygame.draw.rect(gameDisplay, color, [lanex, laney])
 
 def othercars(carx, cary, carw, carh):
-    gameDisplay.blit(obstacleImg, (carx, cary))
+    gameDisplay.blit(otherCarImg, (carx, cary))
 
 def maincar(x, y):
     gameDisplay.blit(carImg, (x, y))
@@ -55,11 +55,11 @@ def game_loop():
 
     x_change = 0
 
-    # obstacle_start_x = random.randragne(0,display_width) 
-    # obstacle_start_y = -600
-    # obstacle_speed = 7
-    # obstacle_width = 100  
-    # obstacle_height = 100
+    lane_start_x = random.randrange(0,display_width) 
+    lane_start_y = -600
+    lane_speed = 7
+    lane_width = 2  
+    lane_height = 100
     
     car_start_x = random.randrange(0,display_width)
     car_start_y = -600 
@@ -95,8 +95,8 @@ def game_loop():
 
         gameDisplay.fill(white)
 
-        # obstacles(obstacle_start_x, obstacle_start_y, obstacle_width, obstacle_height, blue)
-        # obstacle_start_y += obstacle_speed
+        lanes(lane_start_x, lane_start_y, lane_width, lane_height, black)
+        lane_start_y += lane_speed
 
         othercars(car_start_x, car_start_y, car_width, car_height)
 
@@ -106,8 +106,10 @@ def game_loop():
 
         if x > display_width - car_width or x < 0:
             crash()
-        if car_Start_y > display_height:
-            car_start_y = 0 - 
+        if car_start_y > display_height:
+            car_start_y = 0 - car_height 
+            car_start_x = random.randrange(0,display_width)
+
 
         pygame.display.update() # or flip()
         clock.tick(60)  # Update .. FPS
