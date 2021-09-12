@@ -1,7 +1,7 @@
 # Dodge
-Open to Contribution, please read <code>Next Steps</code> section
+Open to Contribution, please read <code>Next Steps</code> section... <br/><br/>
 **Deployment**
-</br>
+<br/>
 1. Option One
     1. Download the Dodge folder
     2. Download Python 3 [https://www.python.org/downloads/]
@@ -15,7 +15,7 @@ Open to Contribution, please read <code>Next Steps</code> section
 
 
 **Gameplay**
-</br>
+<br/>
 1. Controls: 
     Arrow keys to move left or right
 
