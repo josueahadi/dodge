@@ -20,8 +20,8 @@ clock = pygame.time.Clock()
 carImg = pygame.image.load('assets/racecar-000.png')
 otherCarImg = pygame.image.load('assets/racecar-001.png')
 
-def lanes(lanex, laney, lanew, laneh, color):
-    pygame.draw.rect(gameDisplay, color, [lanex, laney])
+# def lanes(lanex, laney, lanew, laneh, color):
+#     pygame.draw.rect(gameDisplay, color, [lanex, laney, lanew, laneh])
 
 def othercars(carx, cary, carw, carh):
     gameDisplay.blit(otherCarImg, (carx, cary))
@@ -55,11 +55,11 @@ def game_loop():
 
     x_change = 0
 
-    lane_start_x = random.randrange(0,display_width) 
-    lane_start_y = -600
-    lane_speed = 7
-    lane_width = 2  
-    lane_height = 100
+    # lane_start_x = random.randrange(0,display_width) 
+    # lane_start_y = -600
+    # lane_speed = 7
+    # lane_width = 10
+    # lane_height = 60
     
     car_start_x = random.randrange(0,display_width)
     car_start_y = -600 
@@ -95,8 +95,8 @@ def game_loop():
 
         gameDisplay.fill(white)
 
-        lanes(lane_start_x, lane_start_y, lane_width, lane_height, black)
-        lane_start_y += lane_speed
+        # lanes(lane_start_x, lane_start_y, lane_width, lane_height, black)
+        # lane_start_y += lane_speed
 
         othercars(car_start_x, car_start_y, car_width, car_height)
 
@@ -106,9 +106,16 @@ def game_loop():
 
         if x > display_width - car_width or x < 0:
             crash()
+
         if car_start_y > display_height:
             car_start_y = 0 - car_height 
             car_start_x = random.randrange(0,display_width)
+        
+        
+
+        # if lane_start_y > display_height:
+        #     lane_start_y = 0 - lane_height
+        #     lane_start_y = random.randrange(0,display_width)
 
 
         pygame.display.update() # or flip()
