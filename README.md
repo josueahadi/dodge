@@ -1,5 +1,5 @@
 # Dodge
-Open to Contribution, please read <code>Next Steps</code> section... <br/><br/>
+Open to Contribution, please read <code>Next Steps</code> section... <br/> <br/>
 **Deployment**
 <br/>
 1. Option One
