@@ -111,10 +111,12 @@ def game_loop():
             obstacle_starty = 0 - obstacle_height 
             obstacle_startx = random.randrange(0,display_width)
         
-        # if y < obstacle_starty + obstacle_height:
-        #     print('y crossover')
+        if y < obstacle_starty + obstacle_height:
+            print('y crossover')
 
-        #     if x > obstacle_startx and x < obstaclee_startx + obstacle_width or x + car_width:
+            if x > obstacle_startx and x < obstacle_startx + obstacle_width or x + car_width > obstacle_startx and x + car_width < obstacle_startx + obstacle_width:
+                print('x crossover')
+                crash()
 
         # if lane_start_y > display_height:
         #     lane_start_y = 0 - lane_height
