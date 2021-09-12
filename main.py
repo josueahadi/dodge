@@ -120,6 +120,7 @@ def game_loop():
             obstacle_starty = 0 - obstacle_height 
             obstacle_startx = random.randrange(0,display_width)
             dodged += 1
+            obstacle_speed += 0.1
         
         if y < obstacle_starty + obstacle_height:
             print('y crossover')
