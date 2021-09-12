@@ -21,6 +21,6 @@ Open to Contribution, please read <code>Next Steps</code> section... <br/> <br/>
 
 **Next Steps**  
 1. Add a road and lanes in the background to create an illusion of a highway.
-2. Increase game challenge/difficulty by adding more cars as well as exponentialy increasing their speed.
+2. Increase game challenge/difficulty by adding more cars (without hard-coding each car; for instance adding them in a for loop) as well as exponentialy increasing their speed.
 3. Add background music and sound effects.
 4. Give the user an option to mute/unmute sound and music.
