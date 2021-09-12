@@ -111,7 +111,8 @@ def game_loop():
             car_start_y = 0 - car_height 
             car_start_x = random.randrange(0,display_width)
         
-        
+        if y < car_start_y + car_height:
+            print('Step 1')
 
         # if lane_start_y > display_height:
         #     lane_start_y = 0 - lane_height
