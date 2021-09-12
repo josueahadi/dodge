@@ -18,13 +18,13 @@ pygame.display.set_caption('Dodge')
 clock = pygame.time.Clock()
 
 carImg = pygame.image.load('assets/racecar-000.png')
-otherCarImg = pygame.image.load('assets/racecar-001.png')
+obstacleCarImg = pygame.image.load('assets/racecar-001.png')
 
 # def lanes(lanex, laney, lanew, laneh, color):
 #     pygame.draw.rect(gameDisplay, color, [lanex, laney, lanew, laneh])
 
-def othercars(carx, cary, carw, carh):
-    gameDisplay.blit(otherCarImg, (carx, cary))
+def obstaclecars(obstaclex, obstacley, obstaclew, obstacleh):
+    gameDisplay.blit(obstacleCarImg, (obstaclex, obstacley))
 
 def maincar(x, y):
     gameDisplay.blit(carImg, (x, y))
@@ -61,11 +61,11 @@ def game_loop():
     # lane_width = 10
     # lane_height = 60
     
-    car_start_x = random.randrange(0,display_width)
-    car_start_y = -600 
-    car_speed = 7
-    car_width = 60
-    car_height = 75
+    obstacle_startx = random.randrange(0,display_width)
+    obstacle_starty = -600 
+    obstacle_speed = 7
+    obstacle_width = 60
+    obstacle_height = 75
 
 
     gameExit = False
@@ -98,21 +98,23 @@ def game_loop():
         # lanes(lane_start_x, lane_start_y, lane_width, lane_height, black)
         # lane_start_y += lane_speed
 
-        othercars(car_start_x, car_start_y, car_width, car_height)
+        obstaclecars(obstacle_startx, obstacle_starty, obstacle_width, obstacle_height)
 
-        car_start_y += car_speed
+        obstacle_starty += obstacle_speed
 
         maincar(x,y)
 
         if x > display_width - car_width or x < 0:
             crash()
 
-        if car_start_y > display_height:
-            car_start_y = 0 - car_height 
-            car_start_x = random.randrange(0,display_width)
+        if obstacle_starty > display_height:
+            obstacle_starty = 0 - obstacle_height 
+            obstacle_startx = random.randrange(0,display_width)
         
-        if y < car_start_y + car_height:
-            print('y crossover')
+        # if y < obstacle_starty + obstacle_height:
+        #     print('y crossover')
+
+        #     if x > obstacle_startx and x < obstaclee_startx + obstacle_width or x + car_width:
 
         # if lane_start_y > display_height:
         #     lane_start_y = 0 - lane_height
