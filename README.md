@@ -17,3 +17,7 @@
 </br>
 1. Controls: 
     Arrow keys to move left or right
+
+**Next Steps**  
+
+Increase game challenge/difficulty by adding more cars as well as exponentialy increasing their speed.
