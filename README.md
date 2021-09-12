@@ -14,4 +14,5 @@
 
 
 **Gameplay**
+</br>
 Controls: Arrow keys to move left or right
