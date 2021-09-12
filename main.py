@@ -20,7 +20,7 @@ clock = pygame.time.Clock()
 carImg = pygame.image.load('assets/racecar-000.png')
 obstacleCarImg = pygame.image.load('assets/racecar-001.png')
 
-def cars_dodged(count):
+def obstacles_dodged(count):
     font = pygame.font.SysFont(None, 25)
     text = font.render("Dodged: "+str(count), True, black)
     gameDisplay.blit(text, (0,0))
@@ -51,6 +51,22 @@ def message_display(text):
 
     game_loop()
 
+def game_intro():
+    intro = True
+    while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        gameDisplay.fill(white)
+        largeText = pygame.font.Font('freesansbold.ttf', 115)
+        TextSurface, TextRect = text_objects("Dodge", largeText)
+        TextRect.center = ((display_width/2), (display_height/2))
+        gameDisplay.blit(TextSurface, TextRect)
+
+        pygame.display.update()
+        clock.tick(15)
+
 def crash():
     message_display('You crashed')
 
@@ -72,6 +88,8 @@ def game_loop():
     obstacle_speed = 7
     obstacle_width = 60
     obstacle_height = 75
+
+    obstacleCount = 1
 
     dodged = 0
 
@@ -111,7 +129,7 @@ def game_loop():
 
         maincar(x,y)
 
-        cars_dodged(dodged)
+        obstacles_dodged(dodged)
 
         if x > display_width - car_width or x < 0:
             crash()
@@ -125,7 +143,7 @@ def game_loop():
         if y < obstacle_starty + obstacle_height:
             print('y crossover')
 
-            if x > obstacle_startx and x < obstacle_startx + obstacle_width or x + car_width > obstacle_startx and x + car_width < obstacle_startx + obstacle_width:
+            if x > obstacle_startx and x < obstacle_startx + obstacle_width or x + car_width > obstacle_startx and x + car_width < obstacle_startx + obstacle_width: # need to get rid of this redundancy...oof
                 print('x crossover')
                 crash()
 
@@ -137,6 +155,7 @@ def game_loop():
         pygame.display.update() # or flip()
         clock.tick(60)  # Update .. FPS
 
+game_intro()
 game_loop()
 pygame.quit()  # uninitiate pygame when the user wants to quit
 quit()
