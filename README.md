@@ -15,4 +15,5 @@
 
 **Gameplay**
 </br>
-Controls: Arrow keys to move left or right
+1. Controls: 
+    Arrow keys to move left or right
