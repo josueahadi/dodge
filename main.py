@@ -9,10 +9,10 @@ display_height = 600
 
 black = (0,0,0)
 white = (255,255,255)
-red = (235, 52, 95)
-bright_red = (252, 61, 61)
-bright_green = (61, 252, 90)
+red = (252, 61, 61)
+bright_red = (235, 52, 95)
 green = (52, 235, 98)
+bright_green = (61, 252, 90)
 
 
 
@@ -56,6 +56,21 @@ def message_display(text):
 
     game_loop()
 
+
+def button(msg, x, y, w, h, inactive_clr, active_clr):
+    mouse_pos = pygame.mouse.get_pos()
+    if x+w > mouse_pos[0] > x and y+h > mouse_pos[1] > y:  # x_cord + button_width > x_cord... it happens that we are in the biubdary of our box
+        pygame.draw.rect(gameDisplay, active_clr, (x, y, w, h)) # apply hover effect
+    else:
+        pygame.draw.rect(gameDisplay, inactive_clr, (x, y, w, h))
+    
+
+    smallText = pygame.font.Font('fonts/BalsamiqSans-Regular.ttf', 20)
+    TextSurface, TextRect = text_objects(msg, smallText)
+    TextRect.center = ( (x+(w/2)), (y+(h/2))) # center text in the button 
+    gameDisplay.blit(TextSurface, TextRect)
+
+
 def game_intro():
     intro = True
     while intro:
@@ -69,27 +84,9 @@ def game_intro():
         TextRect.center = ((display_width/2), (display_height/2))
         gameDisplay.blit(TextSurface, TextRect)
 
-
-        mouse_pos = pygame.mouse.get_pos()
+        button("Start", 350, 400, 100, 50, green, bright_green)
+        button("Quit", 350, 460, 100, 50, red, bright_red)
         
-        if 350+100 > mouse_pos[0] > 300 and 400+50 > mouse_pos[1] > 400:  # x_cord + button_width > x_cord... it happens that we are in the biubdary of our box
-            pygame.draw.rect(gameDisplay, bright_green, (350, 400, 100, 50)) # apply hover effect
-        else:
-            pygame.draw.rect(gameDisplay, green, (350, 400, 100, 50))
-        
-        smallText = pygame.font.Font('fonts/BalsamiqSans-Regular.ttf', 20)
-        TextSurface, TextRect = text_objects("Start", smallText)
-        TextRect.center = ( (350+(100/2)), (400+(50/2))) # center text in the button 
-        gameDisplay.blit(TextSurface, TextRect)
-        
-        if 350+100 > mouse_pos[0] > 300 and 460+50 > mouse_pos[1] > 460:
-            pygame.draw.rect(gameDisplay, bright_red, (350, 460, 100, 50))
-        else:
-            pygame.draw.rect(gameDisplay, red, (350, 460, 100, 50))
-
-
-
-
         pygame.display.update()
         clock.tick(15)
 
@@ -115,7 +112,7 @@ def game_loop():
     obstacle_width = 60
     obstacle_height = 75
 
-    obstacleCount = 1
+    # obstacleCount = 1
 
     dodged = 0
 
