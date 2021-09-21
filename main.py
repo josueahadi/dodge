@@ -10,7 +10,10 @@ display_height = 600
 black = (0,0,0)
 white = (255,255,255)
 red = (235, 52, 95)
+bright_red = (252, 61, 61)
+bright_green = (61, 252, 90)
 green = (52, 235, 98)
+
 
 
 car_width = 60
@@ -23,9 +26,9 @@ carImg = pygame.image.load('assets/racecar-000.png')
 obstacleCarImg = pygame.image.load('assets/racecar-001.png')
 
 def obstacles_dodged(count):
-    font = pygame.font.SysFont(None, 25)
+    font = pygame.font.Font('fonts/BalsamiqSans-Regular.ttf', 16)
     text = font.render("Dodged: "+str(count), True, black)
-    gameDisplay.blit(text, (0,0))
+    gameDisplay.blit(text, (5,5))
 
 
 # def lanes(lanex, laney, lanew, laneh, color):
@@ -42,7 +45,7 @@ def text_objects(text, font):
     return textSurface, textSurface.get_rect()
 
 def message_display(text):
-    largeText = pygame.font.Font('BalsamiqSans-Regular.ttf', 115)
+    largeText = pygame.font.Font('fonts/BalsamiqSans-Regular.ttf', 115)
     TextSurface, TextRect = text_objects(text, largeText)
     TextRect.center = ((display_width/2), (display_height/2))
     gameDisplay.blit(TextSurface, TextRect)
@@ -66,8 +69,21 @@ def game_intro():
         TextRect.center = ((display_width/2), (display_height/2))
         gameDisplay.blit(TextSurface, TextRect)
 
-        pygame.draw.rect(gameDisplay, green, (350, 400, 100, 50))
-        pygame.draw.rect(gameDisplay, red, (350, 460, 100, 50))
+
+        mouse_pos = pygame.mouse.get_pos()
+        
+        if 350+100 > mouse_pos[0] > 300 and 400+50 > mouse_pos[1] > 400:  # x_cord + button_width > x_cord... it happens that we are in the biubdary of our box
+            pygame.draw.rect(gameDisplay, bright_green, (350, 400, 100, 50)) # apply hover effect
+        else:
+            pygame.draw.rect(gameDisplay, green, (350, 400, 100, 50))
+        
+        if 350+100 > mouse_pos[0] > 300 and 460+50 > mouse_pos[1] > 460:
+            pygame.draw.rect(gameDisplay, bright_red, (350, 460, 100, 50))
+        else:
+            pygame.draw.rect(gameDisplay, red, (350, 460, 100, 50))
+
+
+
 
         pygame.display.update()
         clock.tick(15)
