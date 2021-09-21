@@ -77,6 +77,11 @@ def game_intro():
         else:
             pygame.draw.rect(gameDisplay, green, (350, 400, 100, 50))
         
+        smallText = pygame.font.Font('fonts/BalsamiqSans-Regular.ttf', 20)
+        TextSurface, TextRect = text_objects("Start", smallText)
+        TextRect.center = ( (350+(100/2)), (400+(50/2))) # center text in the button 
+        gameDisplay.blit(TextSurface, TextRect)
+        
         if 350+100 > mouse_pos[0] > 300 and 460+50 > mouse_pos[1] > 460:
             pygame.draw.rect(gameDisplay, bright_red, (350, 460, 100, 50))
         else:
