@@ -16,6 +16,10 @@ bright_green = (61, 252, 90)
 
 car_width = 60
 
+
+pause = False
+
+
 gameDisplay = pygame.display.set_mode((display_width, display_height))  # passed a tuple to avoid fnc from treating w&h as separate params
 pygame.display.set_caption('Dodge')
 clock = pygame.time.Clock()
@@ -76,6 +80,35 @@ def button(msg, x, y, w, h, inactive_clr, active_clr, action=None):
     gameDisplay.blit(TextSurface, TextRect)
 
 
+def quitgame():
+    pygame.quit()
+    quit()
+
+def resume():
+    global pause
+    pause = False
+
+def paused():
+    
+    while pause:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        gameDisplay.fill(white)
+        largeText = pygame.font.Font('fonts/BalsamiqSans-Italic.ttf', 115)
+        TextSurface, TextRect = text_objects("Paused", largeText)
+        TextRect.center = ((display_width/2), (display_height/2))
+        gameDisplay.blit(TextSurface, TextRect)
+
+        button("Resume", 350, 400, 100, 50, green, bright_green, resume)
+        button("Quit", 350, 460, 100, 50, red, bright_red, quitgame)
+        
+        pygame.display.update()
+        clock.tick(15)
+
+
 def game_intro():
     intro = True
     while intro:
@@ -83,6 +116,7 @@ def game_intro():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+
         gameDisplay.fill(white)
         largeText = pygame.font.Font('fonts/BalsamiqSans-Italic.ttf', 115)
         TextSurface, TextRect = text_objects("Dodge", largeText)
@@ -95,15 +129,14 @@ def game_intro():
         pygame.display.update()
         clock.tick(15)
 
+
 def crash():
     message_display('You crashed')
 
 
-def quitgame():
-    pygame.quit()
-    quit()
-
 def game_loop():
+
+    global pause
 
     x = (display_width*0.45)
     y = (display_height*0.8)
@@ -133,8 +166,11 @@ def game_loop():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     x_change = -5
-                elif event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT:
                     x_change = 5
+                if event.key == pygame.K_p or event.key == pygame.K_SPACE:
+                    pause = True
+                    paused()
             
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
@@ -172,7 +208,6 @@ def game_loop():
 
         pygame.display.update() # or flip()
         clock.tick(60)  # Update .. FPS
-
 
 
 
