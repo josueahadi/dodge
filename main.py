@@ -18,6 +18,7 @@ car_width = 60
 
 
 pause = False
+# crash = False
 
 
 gameDisplay = pygame.display.set_mode((display_width, display_height))  # passed a tuple to avoid fnc from treating w&h as separate params
@@ -30,7 +31,7 @@ obstacleCarImg = pygame.image.load('assets/racecar-001.png')
 
 def obstacles_dodged(count):
     font = pygame.font.Font('fonts/BalsamiqSans-Regular.ttf', 16)
-    text = font.render("Dodged: "+str(count), True, black)
+    text = font.render("SCORE: "+str(count), True, black)
     gameDisplay.blit(text, (5,5))
 
 
@@ -89,6 +90,11 @@ def resume():
     pause = False
 
 def paused():
+
+    largeText = pygame.font.Font('fonts/BalsamiqSans-Regular.ttf', 115)
+    TextSurface, TextRect = text_objects("Paused", largeText)
+    TextRect.center = ((display_width/2), (display_height/2))
+    gameDisplay.blit(TextSurface, TextRect)
     
     while pause:
         for event in pygame.event.get():
@@ -96,11 +102,7 @@ def paused():
                 pygame.quit()
                 quit()
 
-        gameDisplay.fill(white)
-        largeText = pygame.font.Font('fonts/BalsamiqSans-Italic.ttf', 115)
-        TextSurface, TextRect = text_objects("Paused", largeText)
-        TextRect.center = ((display_width/2), (display_height/2))
-        gameDisplay.blit(TextSurface, TextRect)
+        # gameDisplay.fill(white)
 
         button("Resume", 350, 400, 100, 50, green, bright_green, resume)
         button("Quit", 350, 460, 100, 50, red, bright_red, quitgame)
@@ -131,8 +133,26 @@ def game_intro():
 
 
 def crash():
-    message_display('You crashed')
 
+    largeText = pygame.font.Font('fonts/BalsamiqSans-Regular.ttf', 115)
+    TextSurface, TextRect = text_objects("You Crashed!", largeText)
+    TextRect.center = ((display_width/2), (display_height/2))
+    gameDisplay.blit(TextSurface, TextRect)
+    
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        # gameDisplay.fill(white)
+
+        button("Play Again", 350, 400, 100, 50, green, bright_green, game_loop)
+        button("Quit", 350, 460, 100, 50, red, bright_red, quitgame)
+        
+        pygame.display.update()
+        clock.tick(15)
+ 
 
 def game_loop():
 
@@ -149,7 +169,7 @@ def game_loop():
     obstacle_width = 60
     obstacle_height = 75
 
-    dodged = 0
+    score = 0
 
     gameExit = False
 
@@ -188,7 +208,7 @@ def game_loop():
 
         maincar(x,y)
 
-        obstacles_dodged(dodged)
+        obstacles_dodged(score)
 
         if x > display_width - car_width or x < 0:
             crash()
@@ -196,7 +216,7 @@ def game_loop():
         if obstacle_starty > display_height:
             obstacle_starty = 0 - obstacle_height 
             obstacle_startx = random.randrange(0,display_width)
-            dodged += 1
+            score += 1
             obstacle_speed += 0.1
         
         if y < obstacle_starty + obstacle_height:
