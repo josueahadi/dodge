@@ -14,8 +14,6 @@ bright_red = (235, 52, 95)
 green = (52, 235, 98)
 bright_green = (61, 252, 90)
 
-
-
 car_width = 60
 
 gameDisplay = pygame.display.set_mode((display_width, display_height))  # passed a tuple to avoid fnc from treating w&h as separate params
@@ -25,24 +23,25 @@ clock = pygame.time.Clock()
 carImg = pygame.image.load('assets/racecar-000.png')
 obstacleCarImg = pygame.image.load('assets/racecar-001.png')
 
+
 def obstacles_dodged(count):
     font = pygame.font.Font('fonts/BalsamiqSans-Regular.ttf', 16)
     text = font.render("Dodged: "+str(count), True, black)
     gameDisplay.blit(text, (5,5))
 
 
-# def lanes(lanex, laney, lanew, laneh, color):
-#     pygame.draw.rect(gameDisplay, color, [lanex, laney, lanew, laneh])
-
 def obstaclecars(obstaclex, obstacley, obstaclew, obstacleh):
     gameDisplay.blit(obstacleCarImg, (obstaclex, obstacley))
+
 
 def maincar(x, y):
     gameDisplay.blit(carImg, (x, y))
 
+
 def text_objects(text, font):
     textSurface = font.render(text, True, black)
     return textSurface, textSurface.get_rect()
+
 
 def message_display(text):
     largeText = pygame.font.Font('fonts/BalsamiqSans-Regular.ttf', 115)
@@ -57,10 +56,16 @@ def message_display(text):
     game_loop()
 
 
-def button(msg, x, y, w, h, inactive_clr, active_clr):
+def button(msg, x, y, w, h, inactive_clr, active_clr, action=None):
+    
     mouse_pos = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    
+
     if x+w > mouse_pos[0] > x and y+h > mouse_pos[1] > y:  # x_cord + button_width > x_cord... it happens that we are in the biubdary of our box
         pygame.draw.rect(gameDisplay, active_clr, (x, y, w, h)) # apply hover effect
+        if click[0] == 1 and action != None:
+            action()
     else:
         pygame.draw.rect(gameDisplay, inactive_clr, (x, y, w, h))
     
@@ -84,8 +89,8 @@ def game_intro():
         TextRect.center = ((display_width/2), (display_height/2))
         gameDisplay.blit(TextSurface, TextRect)
 
-        button("Start", 350, 400, 100, 50, green, bright_green)
-        button("Quit", 350, 460, 100, 50, red, bright_red)
+        button("Start", 350, 400, 100, 50, green, bright_green, game_loop)
+        button("Quit", 350, 460, 100, 50, red, bright_red, quitgame)
         
         pygame.display.update()
         clock.tick(15)
@@ -93,26 +98,23 @@ def game_intro():
 def crash():
     message_display('You crashed')
 
+
+def quitgame():
+    pygame.quit()
+    quit()
+
 def game_loop():
 
     x = (display_width*0.45)
     y = (display_height*0.8)
 
     x_change = 0
-
-    # lane_start_x = random.randrange(0,display_width) 
-    # lane_start_y = -600
-    # lane_speed = 7
-    # lane_width = 10
-    # lane_height = 60
     
     obstacle_startx = random.randrange(0,display_width)
     obstacle_starty = -600 
     obstacle_speed = 7
     obstacle_width = 60
     obstacle_height = 75
-
-    # obstacleCount = 1
 
     dodged = 0
 
@@ -143,8 +145,6 @@ def game_loop():
 
         gameDisplay.fill(white)
 
-        # lanes(lane_start_x, lane_start_y, lane_width, lane_height, black)
-        # lane_start_y += lane_speed
 
         obstaclecars(obstacle_startx, obstacle_starty, obstacle_width, obstacle_height)
 
@@ -164,19 +164,17 @@ def game_loop():
             obstacle_speed += 0.1
         
         if y < obstacle_starty + obstacle_height:
-            print('y crossover')
-
+            # print('y crossover')
             if x > obstacle_startx and x < obstacle_startx + obstacle_width or x + car_width > obstacle_startx and x + car_width < obstacle_startx + obstacle_width: # need to get rid of this redundancy...oof
-                print('x crossover')
+                # print('x crossover')
                 crash()
-
-        # if lane_start_y > display_height:
-        #     lane_start_y = 0 - lane_height
-        #     lane_start_y = random.randrange(0,display_width)
 
 
         pygame.display.update() # or flip()
         clock.tick(60)  # Update .. FPS
+
+
+
 
 game_intro()
 game_loop()
