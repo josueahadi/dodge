@@ -9,7 +9,9 @@ display_height = 600
 
 black = (0,0,0)
 white = (255,255,255)
-red = (255,0,0)
+red = (235, 52, 95)
+green = (52, 235, 98)
+
 
 car_width = 60
 
@@ -40,7 +42,7 @@ def text_objects(text, font):
     return textSurface, textSurface.get_rect()
 
 def message_display(text):
-    largeText = pygame.font.Font('freesansbold.ttf', 115)
+    largeText = pygame.font.Font('BalsamiqSans-Regular.ttf', 115)
     TextSurface, TextRect = text_objects(text, largeText)
     TextRect.center = ((display_width/2), (display_height/2))
     gameDisplay.blit(TextSurface, TextRect)
@@ -59,10 +61,13 @@ def game_intro():
                 pygame.quit()
                 quit()
         gameDisplay.fill(white)
-        largeText = pygame.font.Font('freesansbold.ttf', 115)
+        largeText = pygame.font.Font('fonts/BalsamiqSans-Italic.ttf', 115)
         TextSurface, TextRect = text_objects("Dodge", largeText)
         TextRect.center = ((display_width/2), (display_height/2))
         gameDisplay.blit(TextSurface, TextRect)
+
+        pygame.draw.rect(gameDisplay, green, (350, 400, 100, 50))
+        pygame.draw.rect(gameDisplay, red, (350, 460, 100, 50))
 
         pygame.display.update()
         clock.tick(15)
