@@ -4,17 +4,20 @@ import random
 
 pygame.init()  # initiate pygame
 
+crash_sfx = pygame.mixer.Sound("sound/crash_sfx.ogg")
+pygame.mixer.music.load("sound/music.wav")
+
 display_width = 800
 display_height = 600 
 
 black = (0,0,0)
-white = (255,255,255)
+white = (235, 230, 230)
 red = (252, 61, 61)
 bright_red = (235, 52, 95)
 green = (52, 235, 98)
 bright_green = (61, 252, 90)
 
-car_width = 60
+car_width = 51
 
 
 pause = False
@@ -25,8 +28,10 @@ gameDisplay = pygame.display.set_mode((display_width, display_height))  # passed
 pygame.display.set_caption('Dodge')
 clock = pygame.time.Clock()
 
-carImg = pygame.image.load('assets/racecar-000.png')
-obstacleCarImg = pygame.image.load('assets/racecar-001.png')
+carImg = pygame.image.load('assets/racecar-00.png')
+obstacleCarImg = pygame.image.load('assets/racecar-01.png')
+
+pygame.display.set_icon(carImg)
 
 
 def obstacles_dodged(count):
@@ -48,17 +53,17 @@ def text_objects(text, font):
     return textSurface, textSurface.get_rect()
 
 
-def message_display(text):
-    largeText = pygame.font.Font('fonts/BalsamiqSans-Regular.ttf', 115)
-    TextSurface, TextRect = text_objects(text, largeText)
-    TextRect.center = ((display_width/2), (display_height/2))
-    gameDisplay.blit(TextSurface, TextRect)
+# def message_display(text):
+#     largeText = pygame.font.Font('fonts/BalsamiqSans-Regular.ttf', 115)
+#     TextSurface, TextRect = text_objects(text, largeText)
+#     TextRect.center = ((display_width/2), (display_height/2))
+#     gameDisplay.blit(TextSurface, TextRect)
 
-    pygame.display.update()
+#     pygame.display.update()
     
-    time.sleep(2)
+#     time.sleep(2)
 
-    game_loop()
+#     game_loop()
 
 
 def button(msg, x, y, w, h, inactive_clr, active_clr, action=None):
@@ -87,9 +92,14 @@ def quitgame():
 
 def resume():
     global pause
+
+    pygame.mixer.music.unpause()
+    
     pause = False
 
 def paused():
+
+    pygame.mixer.music.pause()
 
     largeText = pygame.font.Font('fonts/BalsamiqSans-Regular.ttf', 115)
     TextSurface, TextRect = text_objects("Paused", largeText)
@@ -134,6 +144,9 @@ def game_intro():
 
 def crash():
 
+    pygame.mixer.music.stop()
+    pygame.mixer.Sound.play(crash_sfx)
+
     largeText = pygame.font.Font('fonts/BalsamiqSans-Regular.ttf', 115)
     TextSurface, TextRect = text_objects("You Crashed!", largeText)
     TextRect.center = ((display_width/2), (display_height/2))
@@ -158,6 +171,11 @@ def game_loop():
 
     global pause
 
+    pygame.mixer.music.play(-1) # Play music indefinetely
+
+
+
+
     x = (display_width*0.45)
     y = (display_height*0.8)
 
@@ -166,7 +184,7 @@ def game_loop():
     obstacle_startx = random.randrange(0,display_width)
     obstacle_starty = -600 
     obstacle_speed = 7
-    obstacle_width = 60
+    obstacle_width = 51
     obstacle_height = 75
 
     score = 0
